@@ -1,0 +1,3 @@
+install react , react-router-dom
+create navbar with " LInk " export 
+Impor navbar, import { BrowserRouter, Switch, Route } from 'react-router-dom';  to app.js 
