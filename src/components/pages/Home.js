@@ -1,41 +1,41 @@
 import React, { Component } from 'react'
+import {connect} from "react-redux";
+import * as actionCreators from "../../store/actions.js/action"
+import './Home.css';
 
 class Home extends Component {
-  constructor(props){
-    super(props);
-    this.state ={
-      items: [],
-      isLoaded: false
-    }
-  }
-
-  componentDidMount() {
-    fetch('https://api.punkapi.com/v2/beers?page=1&per_page=10')
-      .then(res => res.json())
-      .then(json => {
-        this.setState({
-          isLoaded: true,
-          items: json,
-        })
-      });
+  componentDidMount(){
+    window.addEventListener('load', this.props.loadBeer);
   }
   render () {
-    var { isLoaded, items} = this.state;
-    if(!isLoaded){
-      return <div>Loading</div>
-    }
-    else {
+    const beer = this.props.beer;
+    const beerList = beer.map(item => {
       return (
-        <div>
-          <ul>
-            {items.map(item => (
-              <li key={item.id}>{item.name}</li>
-            ))}
-          </ul>
+        <div className="grid-example col s12 m4" key={item.id}>
+          <div className="card horizontal">
+            <div className="card-image">
+              <img src={item.image_url} alt="" height="320" width="20"/>
+            </div>
+            <div className="card-stacked">
+              <div className="title center">{item.name}</div>
+              <div className="card-content">{item.description}</div>
+            </div>
+          </div>
         </div>
       )
-    }
+    })
+    return (
+      <div>
+        <div className="row">
+          {beerList}
+        </div>
+      </div>
+    )
   }
 }
 
-export default Home;
+const mapStateToProps=(state)=>{
+  return state
+};
+
+export default connect (mapStateToProps, actionCreators)(Home);
