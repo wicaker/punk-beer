@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import SignedInLinks from './SignedInLink';
+import SignedOutLinks from './SignedOutLink';
+import MobileSignedInLinks from './MobileSignedIn';
+import MobileSignedOutLinks from './MobileSignedOut';
 
 class Navbar extends Component {
   render () {
@@ -9,16 +13,12 @@ class Navbar extends Component {
           <div className="nav-wrapper green darken-2">
             <Link to='/' className="brand-logo">Beans Love Beer</Link>
             <Link to="#" data-target="mobile-demo" className="sidenav-trigger"><i className="material-icons">menu</i></Link>
-            <ul id="nav-mobile" className="right hide-on-med-and-down">
-              <li><Link to='/' className='right home'>Home</Link></li>
-              <li><Link to='/favorites' className='right favorites'>Favorites</Link></li>
-            </ul>
+            <SignedOutLinks />
+            <SignedInLinks />
           </div>
         </nav>
-        <ul className="sidenav" id="mobile-demo">
-          <li><Link to='/' className='right home'>Home</Link></li>
-          <li><Link to='/favorites' className='right favorites'>Favorites</Link></li>
-        </ul>
+        <MobileSignedInLinks />
+        <MobileSignedOutLinks />
       </div>
     )
   }

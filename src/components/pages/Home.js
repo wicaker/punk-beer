@@ -14,11 +14,11 @@ class Home extends Component {
         <div className="grid-example col s12 m4" key={item.id}>
           <div className="card horizontal">
             <div className="card-image">
-              <img src={item.image_url} alt="" height="320" width="20"/>
+              <img src={item.image_url} alt="" height="250" width="20"/>
             </div>
             <div className="card-stacked">
-              <div className="title center">{item.name}</div>
-              <div className="card-content">{item.description}</div>
+              <div className="title center"><h6>{item.name}</h6></div>
+              <div className="card-content"><p>{item.description.slice(0,100)}...</p></div>
             </div>
           </div>
         </div>
