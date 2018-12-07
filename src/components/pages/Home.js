@@ -6,10 +6,9 @@ import { NavLink } from 'react-router-dom';
 
 class Home extends Component {
   componentWillMount(){
-    window.addEventListener('load', this.props.loadBeer);
+    this.props.loadBeer();
   }
   render () {
-    console.log(this.props.match);
     const beer = this.props.beer;
     const beerList = beer.map(item => {
       return (

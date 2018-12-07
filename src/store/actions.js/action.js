@@ -9,10 +9,6 @@ export function loadBeer(){
 }
 
 export function changeBeer(beer){
-    let listBeer = []
-    for(let i=0;i<beer.length;i++){
-        listBeer.push({id: beer[i].id, name: beer[i].name, image_url: beer[i].image_url, description: beer[i].description})
-    }
     return{
         type:"CHANGE_BEER",
         listbeer : beer

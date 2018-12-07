@@ -1,38 +1,39 @@
 import React, { Component } from 'react'
-import {connect} from "react-redux";
-import * as actionCreators from "../../store/actions.js/action"
+import {connect} from "react-redux"; //connect redux store to component
+import * as actionCreators from "../../store/actions.js/action" //connect redux store to component
 import './Home.css';
 
 class BeerDetails extends Component {
-  render () {
+  state = {
+    beer : ''
+  }
+  componentWillMount(e){
     let id = this.props.match.params.id;
-    let beer = [];
-    console.log(beer);
     for(let i=0 ; i<this.props.beer.length ; i++ ){
       if(this.props.beer[i].name === id ){
-        beer.push(this.props.beer[i]);
+        this.setState({ beer : this.props.beer[i]}) //change state beer value 
       }
       else{
         continue;
       }
     }
-    const beerList = beer.map(item => {
-      return (
-        <div className="row center" key={item.id}>
-          <div><h3>{item.name}</h3></div>
-          <div><img src={item.image_url} alt="" height="250" /> </div>
-          <div><p>{item.description}</p></div>
-        </div>
-      )
-    })
+  }
+
+  render () {
+    console.log(this.state.beer);
     return (
       <div className='container'>
-       {beerList}
+        <div className="row center">
+          <div><h3>{this.state.beer.name}</h3></div>
+          <div><img src={this.state.beer.image_url} alt="" height="250" /> </div>
+          <div><p>{this.state.beer.description}</p></div>
+        </div>
       </div>
     )
   }
 }
 
+//connect redux store to component
 const mapStateToProps=(state)=>{
   return state
 };
