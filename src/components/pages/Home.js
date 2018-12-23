@@ -9,6 +9,7 @@ class Home extends Component {
     this.props.loadBeer();
   }
   render () {
+    console.log(this.props)
     const beer = this.props.beer;
     const beerList = beer.map(item => {
       return (
@@ -26,10 +27,8 @@ class Home extends Component {
       )
     })
     return (
-      <div>
-        <div className="row">
+      <div className='row'>
           {beerList}
-        </div>
       </div>
     )
   }

@@ -18,15 +18,24 @@ class BeerDetails extends Component {
       }
     }
   }
-
+  handleClick = (e) => {
+    e.preventDefault();
+    const post = {
+      title: this.state.beer.name,
+      content: this.state.beer.description,
+      imageUrl: this.state.beer.image_url
+    }
+    console.log(post);
+    this.props.createPost(post);
+  }
   render () {
-    console.log(this.state.beer);
     return (
       <div className='container'>
         <div className="row center">
           <div><h3>{this.state.beer.name}</h3></div>
           <div><img src={this.state.beer.image_url} alt="" height="250" /> </div>
           <div><p>{this.state.beer.description}</p></div>
+          <button onClick={this.handleClick}>Add As Favorite</button>
         </div>
       </div>
     )

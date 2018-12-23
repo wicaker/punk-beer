@@ -7,7 +7,13 @@ const rootReducer = (state = defaultState,action)=>{
       return{
           beer:action.listbeer
       }
-  } else{
+  } else if(action.type==="FAVORITE_BEER"){
+      return{
+        // ...beer,
+        // // beer : [action.favoriteBeer]
+      }
+  }
+  else{
       return{
           ...state
       }
