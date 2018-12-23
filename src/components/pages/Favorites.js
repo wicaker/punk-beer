@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
+import Paginator from './paginator/Paginator';
 
 class Favorites extends Component {
   state = {
-    posts : []
+    posts : [],
+    totalPosts: 0,
+    postPage: 1,
+    postsLoading: true,
   }
 
-  componentWillMount(){
+  componentDidMount(){
     fetch('http://localhost:8080/feed/posts')
     .then(res => {
       if(res.status !== 200){
@@ -20,7 +24,38 @@ class Favorites extends Component {
       });
     })
     .catch(err=> console.log(err));
+    this.loadPosts();
   }
+
+  loadPosts = direction => {
+    if (direction) {
+      this.setState({ postsLoading: true, posts: [] });
+    }
+    let page = this.state.postPage;
+    if (direction === 'next') {
+      page++;
+      this.setState({ postPage: page });
+    }
+    if (direction === 'previous') {
+      page--;
+      this.setState({ postPage: page });
+    }
+    fetch('http://localhost:8080/feed/posts?page='+ page)
+      .then(res => {
+        if (res.status !== 200) {
+          throw new Error('Failed to fetch posts.');
+        }
+        return res.json();
+      })
+      .then(resData => {
+        this.setState({
+          posts: resData.posts,
+          totalPosts: resData.totalItems,
+          postsLoading: false
+        });
+      })
+      .catch(this.catchError);
+  };
 
   handleDelete = (postId) => {
     fetch('http://localhost:8080/feed/post/' + postId, {
@@ -64,9 +99,16 @@ class Favorites extends Component {
       })
     ) : (<div className='center'>No Favorite Beer</div>)
     return (
-      <div className='row'>
-          {favoriteBeer}
-      </div>
+        <Paginator
+          onPrevious={this.loadPosts.bind(this, 'previous')}
+          onNext={this.loadPosts.bind(this, 'next')}
+          lastPage={Math.ceil(this.state.totalPosts / 2)}
+          currentPage={this.state.postPage}
+        >
+        <div className='row'>
+            {favoriteBeer}
+        </div>
+        </Paginator>
     )
   }
 }
